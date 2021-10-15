@@ -3,8 +3,7 @@ FROM node:alpine AS builder
 WORKDIR /app
 
 # copy package.json to the work_dir
-COPY package.json /
-COPY package-lock.json /
+COPY package*.json /
 
 # install all depencies 
 RUN npm ci
