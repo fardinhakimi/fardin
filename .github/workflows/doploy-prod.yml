@@ -15,9 +15,6 @@ jobs:
     - name: Source
       uses: actions/checkout@v2
 
-    - name: Lint
-      run: npm run lint
-
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag fardin:main
 
