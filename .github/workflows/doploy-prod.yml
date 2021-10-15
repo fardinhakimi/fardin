@@ -13,8 +13,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag fardinhakimi:main
+      run: docker build . --file Dockerfile --tag fardin:main
       
     - name: Push the Docker image to DockerHub
-      run: docker push fardinhakimi:main
+      run: docker push fardinhakimi/fardin:main
     
