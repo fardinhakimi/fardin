@@ -2,16 +2,32 @@ name: Build and Deploy Docker image to DockerHub
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, development ]
 
 jobs:
 
-  build:
+  lint-build-test:  
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set output
+        id: vars
+        run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+      - run: npm run test
+
+  deploy:
 
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1
@@ -30,5 +46,4 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: fardinhakimi/fardin:main
-    
+        tags: fardinhakimi/fardin:${GITHUB_REF##*/}
